@@ -7,12 +7,32 @@ import { LeftSidebar } from "@/components/left-sidebar";
 import ImageGenerationLoading from "@/components/image-generation";
 import { AIPromptInput } from "@/components/prompt-input";
 import { RightSidebar } from "@/components/right-sidebar";
+import { useRef, useState } from "react";
 
-export default function Home() {
-  const imageSelected = false;
+ export default function Home() {
+  
+  const fileimginputref =  useRef<HTMLInputElement>(null);
+  const [image, setImage] = useState("")
+
+  //* getting the image from the input file
+  const handleimageupload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const imgfile = e.target.files?.[0];
+  
+  //* Read img the file
+  const reader = new FileReader();
+  reader.onload = () => {
+    const result= reader.result;
+    setImage(result as string);
+  };
+  
+  reader.readAsDataURL(imgfile as File);
+}
+   
   return (
     <>
-      <div className="w-full h-dvh flex flex-col overflow-hidden">
+     <div className="w-full h-dvh flex flex-col overflow-hidden">
+    <input type="file" accept="image/*" className="hidden" ref={fileimginputref} onChange={handleimageupload} />
+      
         <Navbar />
         <div className="flex-1 flex min-h-0 overflow-hidden">
           {/* LEFT COLUMN */}
@@ -33,7 +53,7 @@ export default function Home() {
 
               {/* MAIN EDITOR SCREEN */}
               <div className="w-full h-full flex items-center justify-center p-6 md:p-10">
-                {!imageSelected ? (
+                {!image ? (
                   <div className="text-center space-y-6 max-w-sm z-10 ">
                     <div className="w-24 h-24 bg-zinc-900/50 rounded-3xl border border-zinc-800 flex items-center justify-center mx-auto shadow-2xl shadow-yellow-900/10">
                       <Image
@@ -57,7 +77,7 @@ export default function Home() {
                       </p>
                     </div>
                     <Button
-                      onClick={() => {}}
+                      onClick={()=> fileimginputref.current?.click()}
                       className="w-full h-11 bg-yellow-500 hover:bg-yellow-400 text-zinc-950 font-bold rounded-xl transition-all hover:scale-[1.02]"
                     >
                       Select Image
@@ -65,7 +85,12 @@ export default function Home() {
                   </div>
                 ) : (
                   <div className="relative w-full h-full flex items-center justify-center">
-                    IMAGE EDITOR COMPONENT
+                    <Image
+                      src={image}
+                      alt="Uploaded Image"
+                      fill
+                      className="object-contain"
+                    />
                   </div>
                 )}
               </div>
