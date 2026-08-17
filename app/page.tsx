@@ -8,11 +8,14 @@ import ImageGenerationLoading from "@/components/image-generation";
 import { AIPromptInput } from "@/components/prompt-input";
 import { RightSidebar } from "@/components/right-sidebar";
 import { useRef, useState } from "react";
+import { usegetImg } from "./store/image";
 
  export default function Home() {
   
   const fileimginputref =  useRef<HTMLInputElement>(null);
-  const [image, setImage] = useState("")
+  // const [image, setImage] = useState("")
+ const {image, setImage} = usegetImg()
+
 
   //* getting the image from the input file
   const handleimageupload = (e: React.ChangeEvent<HTMLInputElement>) => {
