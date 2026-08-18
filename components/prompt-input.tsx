@@ -1,5 +1,6 @@
 "use client";
 
+import { globalState } from "@/app/store/GlobalState";
 import {
   Attachment,
   AttachmentPreview,
@@ -106,6 +107,7 @@ const PromptInputAttachmentsDisplay = () => {
 };
 
 export const AIPromptInput = () => {
+  const { setprompt ,spaits} = globalState();
   const [model, setModel] = useState<string>(models[0].id);
   const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
   const [status, setStatus] = useState<
@@ -123,7 +125,8 @@ export const AIPromptInput = () => {
     }
 
     setStatus("submitted");
-
+    setprompt(message.text || ""); // Update the prompt in global state
+    spaits(); // Call the function to send prompt and image to server
     // eslint-disable-next-line no-console
     console.log("Submitting message:", message);
 

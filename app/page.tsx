@@ -8,13 +8,13 @@ import ImageGenerationLoading from "@/components/image-generation";
 import { AIPromptInput } from "@/components/prompt-input";
 import { RightSidebar } from "@/components/right-sidebar";
 import { useRef, useState } from "react";
-import { usegetImg } from "./store/image";
+import { globalState } from "./store/GlobalState";
 
  export default function Home() {
   
   const fileimginputref =  useRef<HTMLInputElement>(null);
   // const [image, setImage] = useState("")
- const {image, setImage} = usegetImg()
+ const {image, setImage} = globalState()
 
 
   //* getting the image from the input file
