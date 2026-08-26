@@ -14,7 +14,7 @@ import {
 export const RightSidebar = () => {
   const isActive = true;
   return (
-    <aside className="flex h-full w-40 flex-col shrink-0 border-l border-zinc-800 bg-zinc-950/50 z-20 overflow-hidden">
+    <aside className="flex h-full w-40 flex-col shrink-0 border-l border-zinc-800  bg-[#0F0F12] z-20 overflow-hidden">
       <div className="flex-1 min-h-0 w-full">
         <ScrollArea className="h-full w-full">
           <div className="flex flex-col gap-4 p-4 pb-4">

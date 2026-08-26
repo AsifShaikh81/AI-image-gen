@@ -9,9 +9,9 @@ import { cn } from "@/lib/utils";
 
 export function Navbar() {
   return (
-    <header className="h-16 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between px-4 shrink-0 z-50">
+    <header className="h-16 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between  px-4 shrink-0 z-50">
       {/* Left: Branding */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 ">
         <Link
           className="flex items-center gap-2 font-bold text-xl hover:opacity-90 transition-opacity"
           href="/"
@@ -25,9 +25,9 @@ export function Navbar() {
               priority
             />
           </div>
-          <span className="text-zinc-100 hidden md:block tracking-tight">
-            {`Coder's`}
-            <span className="text-yellow-500">Banana</span>
+          <span className=" text-[#F4F4F5]  hidden md:block tracking-tight">
+           Pixora
+            {/* <span className="text-yellow-500">Banana</span>  */}
           </span>
         </Link>
       </div>
@@ -66,15 +66,15 @@ export function Navbar() {
             className="h-9 bg-zinc-900 border-zinc-800 text-zinc-300 hover:bg-zinc-800 hover:text-white hover:border-zinc-700 px-2.5 md:px-4"
           >
             <Upload size={14} className="md:mr-2" />
-            <span className="hidden md:inline">Upload</span>
+            <span className="hidden md:inline text-[#F4F4F5]">Upload</span>
           </Button>
 
           <Button
             variant="default"
             size="sm"
-            className="h-9 bg-yellow-500 text-zinc-950 hover:bg-yellow-400 font-bold px-2.5 md:px-4"
+            className="h-9 bg-[#8B5CF6] hover:bg-[#7C3AED] font-bold px-2.5 md:px-4"
           >
-            <span className="hidden md:inline">Export</span>
+            <span className="hidden md:inline text-[#F4F4F5] ">Export</span>
             <Download size={14} className="md:ml-2" />
           </Button>
         </div>

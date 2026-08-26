@@ -11,6 +11,9 @@ importers:
       '@google/genai':
         specifier: ^2.18.0
         version: 2.18.0(supports-color@7.2.0)
+      '@huggingface/inference':
+        specifier: ^4.13.28
+        version: 4.13.28
       '@radix-ui/react-accordion':
         specifier: ^1.2.12
         version: 1.2.12(@types/react-dom@19.2.3(@types/react@19.2.10))(@types/react@19.2.10)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -352,6 +355,17 @@ packages:
     peerDependenciesMeta:
       '@modelcontextprotocol/sdk':
         optional: true
+
+  '@huggingface/inference@4.13.28':
+    resolution: {integrity: sha512-KTfWx7+H1xo9cbBrHvF8me/GjujV1W6DRjfKilO8z7UPiNXn8aFJgNwRl0A1g4w/FWnYo6JeNZHh8240BpG9mw==}
+    engines: {node: '>=18'}
+
+  '@huggingface/jinja@0.5.9':
+    resolution: {integrity: sha512-uWTG+l3VJRsl7EXxYizuL3P+cCPoc3cRqbWWRcQN0FhejRfbdq0RNhCmbY/YDtnTcz9icdLYuLDjsnz4d8JMuw==}
+    engines: {node: '>=18'}
+
+  '@huggingface/tasks@0.21.36':
+    resolution: {integrity: sha512-45RXuCQuaG7LlkYSYy1owAEBRwebJ3bUZrI5MmgQ2zkFSah8UJDwJMoe/uecGKKwVZEum0mQu1H2NZhtqzX6Cw==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -4197,6 +4211,15 @@ snapshots:
       - bufferutil
       - supports-color
       - utf-8-validate
+
+  '@huggingface/inference@4.13.28':
+    dependencies:
+      '@huggingface/jinja': 0.5.9
+      '@huggingface/tasks': 0.21.36
+
+  '@huggingface/jinja@0.5.9': {}
+
+  '@huggingface/tasks@0.21.36': {}
 
   '@humanfs/core@0.19.1': {}
 

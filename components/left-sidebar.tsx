@@ -27,12 +27,12 @@ import { ToolButton } from "@/components//tool-button";
 
 export const LeftSidebar = () => {
   return (
-    <aside className="hidden md:flex w-80 flex-col border-r border-zinc-800 bg-zinc-950/50 z-20 shrink-0 h-full">
+    <aside className="hidden md:flex w-80 flex-col border-r border-zinc-800  bg-[#0F0F12] z-20 shrink-0 h-full">
       <ScrollArea className="h-full w-full">
         <div className="p-4 space-y-6">
           {/* 1. Tools Grid */}
-          <div className="px-4 space-y-2 bg-zinc-800/50 p-3 rounded-xl">
-            <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+          <div className="px-4 space-y-2  bg-[#16161A] hover:bg-[#1E1E22] border-3 border-[#27272A] p-3 rounded-xl">
+            <h3 className="text-xs font-semibold text-[#A1A1AA] uppercase tracking-wider">
               Tools
             </h3>
             <Separator className="bg-zinc-800" />
@@ -67,10 +67,10 @@ export const LeftSidebar = () => {
             {/* 2. Brush Size */}
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+                <h3 className="text-xs font-semibold text-[#A1A1AA] uppercase tracking-wider">
                   Size
                 </h3>
-                <span className="text-xs font-mono text-zinc-200 bg-zinc-900 border border-zinc-800 px-2 py-1 rounded">
+                <span className="text-xs font-mono text-[#A1A1AA] bg-zinc-900 border border-zinc-800 px-2 py-1 rounded">
                   10px
                 </span>
               </div>
@@ -91,8 +91,8 @@ export const LeftSidebar = () => {
           <Separator className="bg-zinc-800" />
 
           {/* 3. AI Accordions */}
-          <div className="px-4 space-y-2 bg-zinc-800/50 p-3 rounded-xl">
-            <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+          <div className="px-4 space-y-2 bg-[#16161A] hover:bg-[#1E1E22] border-3 border-[#27272A] p-3 rounded-xl">
+            <h3 className="text-xs font-semibold text-[#A1A1AA] uppercase tracking-wider">
               Options
             </h3>
 

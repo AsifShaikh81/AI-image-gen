@@ -156,7 +156,7 @@ export const AIPromptInput = () => {
               </PromptInputActionMenu>
               <PromptInputButton>
                 <GlobeIcon size={16} />
-                <span>Search</span>
+                <span className="text-[#A1A1AA]">Search</span>
               </PromptInputButton>
               <ModelSelector
                 onOpenChange={setModelSelectorOpen}

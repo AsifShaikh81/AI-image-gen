@@ -808,7 +808,7 @@ export const PromptInputTextarea = ({
   className,
   placeholder = "What would you like to know?",
   ...props
-}: PromptInputTextareaProps) => {
+ }: PromptInputTextareaProps) => {
   const controller = useOptionalPromptInputController();
   const attachments = usePromptInputAttachments();
   const [isComposing, setIsComposing] = useState(false);
@@ -1030,7 +1030,7 @@ export const PromptInputSubmit = ({
 }: PromptInputSubmitProps) => {
   const isGenerating = status === "submitted" || status === "streaming";
 
-  let Icon = <CornerDownLeftIcon className="size-4" />;
+  let Icon = <CornerDownLeftIcon className="size-4  bg-[#8B5CF6] hover:bg-[#7C3AED]" />;
 
   if (status === "submitted") {
     Icon = <Loader2Icon className="size-4 animate-spin" />;
@@ -1052,7 +1052,7 @@ export const PromptInputSubmit = ({
   return (
     <InputGroupButton
       aria-label={isGenerating ? "Stop" : "Submit"}
-      className={cn(className)}
+      className={cn("bg-[#8B5CF6] text-white hover:bg-[#7C3AED]",className)}
       onClick={handleClick}
       size={size}
       type={isGenerating && onStop ? "button" : "submit"}

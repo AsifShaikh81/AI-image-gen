@@ -1,42 +1,47 @@
 // /api/editImage/route.ts
 import { NextRequest, NextResponse } from 'next/server'
-import { GoogleGenAI } from "@google/genai";
 import fs from 'node:fs';
+import { InferenceClient } from "@huggingface/inference";
 
 
 export async function POST(req: NextRequest) {
+  const client = new InferenceClient(process.env.HF_TOKEN);
   const { prompt, imageBase64 } = await req.json()
 
-  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    if (!prompt || !imageBase64) {
+      return NextResponse.json(
+        { error: "prompt aur imageBase64 dono required hain" },
+        { status: 400 }
+      )
+    }
+
+
   // for dynamic mimetype
   const match = imageBase64.match(/^data:(image\/\w+);base64,(.+)$/);
   const mymimeType = match ? match[1] : 'image/jpeg';
   //"imageBase64" me "data:image/jpeg;base64," prefix hai, usko hata do
   const base64Data = imageBase64.includes(',') ? imageBase64.split(',')[1] : imageBase64;
 
-  const parts = [
-    { type: "text", text: prompt },
-    {
-      type: "image",
-      mime_type: mymimeType, // dynamic mimetype based on the input image
-      data: base64Data, // base64 encoded image data without the prefix
-    },
-  ];
-  console.log("parts", parts)
-  const interaction = await ai.interactions.create({
-    model: "gemini-3.1-flash-image",
-    input: parts
-  });
+   // base64 -> Buffer -> Blob (actual uploaded image use ho rahi hai, hardcoded file nahi)
+   //image ko blob me convert karne ke liye pehle base64 ko buffer me convert karna hoga 
+   // image ko blob me isliye convert karna hoga kyunki huggingface inference client ko blob chahiye hota hai
+    const buffer = Buffer.from(base64Data, 'base64')
+ 
 
-  const generatedImage = interaction.output_image;
-  if (generatedImage?.data) {
-    const buffer = Buffer.from(generatedImage.data, "base64");
-    fs.writeFileSync("gemini-native-image.png", buffer);
-    console.log("Image saved as gemini-native-image.png");
-  }
+ const Blobimage = await client.imageToImage({
+	provider: "fal-ai",
+	model: "black-forest-labs/FLUX.1-Kontext-dev",
+	inputs: new Blob([buffer], { type: mymimeType }),
+	parameters: { prompt},
+});
+/// Use the generated image (it's a Blob)
+// For example, you can save it to a file or display it in an image element
 
 
 
-
-  return NextResponse.json({ result: `Image edited successfully` })
+// Blob ko base64 mein convert karo taaki JSON response mein bhej sakein
+    const resultBuffer = Buffer.from(await Blobimage.arrayBuffer())
+    const resultBase64 = `data:${Blobimage.type || 'image/png'};base64,${resultBuffer.toString('base64')}`
+ 
+    return NextResponse.json({ result: resultBase64 })
 }
