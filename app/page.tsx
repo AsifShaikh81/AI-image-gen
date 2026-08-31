@@ -1,5 +1,5 @@
 "use client";
-
+// page.tsx
 import Image from "next/image";
 import { Navbar } from "@/components/navbar";
 import { Button } from "@/components/ui/button";
@@ -8,13 +8,14 @@ import ImageGenerationLoading from "@/components/image-generation";
 import { AIPromptInput } from "@/components/prompt-input";
 import { RightSidebar } from "@/components/right-sidebar";
 import { useRef, useState } from "react";
-import { globalState } from "./store/GlobalState";
+import { useGlobalstate } from "./store/GlobalState";
+
 
 export default function Home() {
 
   const fileimginputref = useRef<HTMLInputElement>(null);
   // const [image, setImage] = useState("")
-  const { image, setImage } = globalState()
+  const { image, setImage } = useGlobalstate()
 
 
   //* getting the image from the input file

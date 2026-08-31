@@ -1,6 +1,8 @@
+// this is prompt-input.tsx
+
 "use client";
 
-import { globalState } from "@/app/store/GlobalState";
+import { useGlobalstate,} from "@/app/store/GlobalState";
 import {
   Attachment,
   AttachmentPreview,
@@ -107,7 +109,7 @@ const PromptInputAttachmentsDisplay = () => {
 };
 
 export const AIPromptInput = () => {
-  const { setprompt ,spaits} = globalState();
+  const { setprompt ,spaits} = useGlobalstate();
   const [model, setModel] = useState<string>(models[0].id);
   const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
   const [status, setStatus] = useState<
