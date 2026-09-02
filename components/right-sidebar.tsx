@@ -10,9 +10,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useGlobalstate } from "@/app/store/GlobalState";
 
 export const RightSidebar = () => {
-  const isActive = true;
+const {history, historyIndex, setHistoryIndex} = useGlobalstate()
+
   return (
     <aside className="flex h-full w-40 flex-col shrink-0 border-l border-zinc-800  bg-[#0F0F12] z-20 overflow-hidden">
       <div className="flex-1 min-h-0 w-full">
@@ -23,41 +25,48 @@ export const RightSidebar = () => {
             {/* <div className="text-center py-10">
               <span className="text-xs text-zinc-600">No history yet</span>
             </div> */}
+            {/* this one */}
+            {history.map((imageState, idx) => {
+              const isActive =historyIndex === idx;
+              return (
+                <div key={idx} className="relative group">
+                <button
+                  onClick={() => {setHistoryIndex(idx)}}
+                  className={cn(
+                    "relative w-full aspect-square rounded-xl overflow-hidden border-2 transition-all duration-200",
+                    isActive
+                      ? "border-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.2)]"
+                      : "border-zinc-800 hover:border-zinc-600 opacity-60 hover:opacity-100",
+                  )}
+                >
+                  <Image
+                    width={500}
+                    height={500}
+                    // ToDO: change logo 
+                    src={imageState || "/logo.png"}
+                    alt={`Version ${idx + 1}`}
+                    className="w-full h-full object-cover"
+                  />
 
-            <div className="relative group">
-              <button
-                onClick={() => {}}
-                className={cn(
-                  "relative w-full aspect-square rounded-xl overflow-hidden border-2 transition-all duration-200",
-                  isActive
-                    ? "border-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.2)]"
-                    : "border-zinc-800 hover:border-zinc-600 opacity-60 hover:opacity-100",
-                )}
-              >
-                <Image
-                  width={500}
-                  height={500}
-                  src={"/logo.png"}
-                  alt={`Version ${1}`}
-                  className="w-full h-full object-cover"
-                />
+                  {isActive && (
+                    <div className="absolute inset-0 bg-yellow-500/5 pointer-events-none" />
+                  )}
+                </button>
 
-                {isActive && (
-                  <div className="absolute inset-0 bg-yellow-500/5 pointer-events-none" />
-                )}
-              </button>
-
-              <div
-                className={cn(
-                  "absolute top-2 right-2 w-5 h-5 flex items-center justify-center rounded-full text-[10px] font-bold shadow-md z-10 pointer-events-none",
-                  isActive
-                    ? "bg-yellow-500 text-zinc-950"
-                    : "bg-zinc-800 text-zinc-400 border border-zinc-700",
-                )}
-              >
-                1
+                <div
+                  className={cn(
+                    "absolute top-2 right-2 w-5 h-5 flex items-center justify-center rounded-full text-[10px] font-bold shadow-md z-10 pointer-events-none",
+                    isActive
+                      ? "bg-yellow-500 text-zinc-950"
+                      : "bg-zinc-800 text-zinc-400 border border-zinc-700",
+                  )}
+                >
+                  {idx + 1}
+                </div>
               </div>
-            </div>
+              )
+              
+})}
           </div>
         </ScrollArea>
       </div>
