@@ -13,6 +13,8 @@
       setHistory:(history:string[])=>void
       historyIndex:number
       setHistoryIndex:(index:number)=>void
+      undo:()=>void
+      redo:()=>void
   }
 
   export const useGlobalstate = create<imgTP>()(devtools((set,get) => ({
@@ -32,8 +34,20 @@
     setImage:(imageData) => set(()=>({image:imageData, history:[imageData]})),
     prompt:"",
     setprompt:(prompt:string)=> set(()=>({prompt})),
-    
-  
+    undo:()=>{
+      const state = get()
+      if(state.historyIndex > 0){
+        const newIndex =  state.historyIndex - 1
+        set({historyIndex:newIndex,  image:state.history[newIndex]})
+      }
+    },  
+    redo:()=>{
+      const state = get()
+      if(state.historyIndex < state.history.length - 1){
+        const newIndex = state.historyIndex + 1 
+        set({historyIndex:newIndex, image:state.history[newIndex]})
+      }
+    },
     spaits:async () => {
       const state = get()
     
@@ -54,8 +68,8 @@
 
       }
       
-    )
-    if(!response.ok){
+     )
+     if(!response.ok){
       throw new Error("Failed to send prompt and image to server")
 
     }

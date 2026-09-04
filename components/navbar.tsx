@@ -6,8 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Download, History, Redo, Undo, Upload, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { useGlobalstate } from "@/app/store/GlobalState";
 
 export function Navbar() {
+  const {undo , redo ,historyIndex, history} = useGlobalstate()
   return (
     <header className="h-16 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between  px-4 shrink-0 z-50">
       {/* Left: Branding */}
@@ -18,6 +20,7 @@ export function Navbar() {
         >
           <div className="relative h-11 w-11 overflow-hidden rounded-xl flex items-center justify-center">
             <Image
+             
               src="/logo.png"
               alt="Coder's Banana Logo"
               fill
@@ -39,6 +42,8 @@ export function Navbar() {
           <Button
             variant="ghost"
             size="icon"
+            onClick={undo}
+            disabled={historyIndex === 0}
             className="h-8 w-8 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
           >
             <Undo size={15} />
@@ -49,6 +54,8 @@ export function Navbar() {
           <Button
             variant="ghost"
             size="icon"
+            onClick={redo}
+            disabled={historyIndex === history.length - 1} // historyindex is 0-based, so we check against history.length - 1
             className="h-8 w-8 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
           >
             <Redo size={15} />
