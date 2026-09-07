@@ -14,6 +14,12 @@ import { useGlobalstate } from "@/app/store/GlobalState";
 
 export const RightSidebar = () => {
 const {history, historyIndex, setHistoryIndex} = useGlobalstate()
+  const clearHistory = () =>{
+    if(history.length >= 1 ){
+      const currentImage = history[historyIndex]
+      setHistoryIndex(0)
+    }
+  }
 
   return (
     <aside className="flex h-full w-40 flex-col shrink-0 border-l border-zinc-800  bg-[#0F0F12] z-20 overflow-hidden">
@@ -80,8 +86,8 @@ const {history, historyIndex, setHistoryIndex} = useGlobalstate()
                 variant="ghost"
                 size="sm"
                 className="w-full text-zinc-500 hover:text-red-400 hover:bg-zinc-900 rounded-lg"
-                onClick={() => {}}
-                disabled={true}
+                onClick={clearHistory}
+                disabled={history.length <= 1}
               >
                 <Trash2 size={14} className="mr-2" />
                 <span className="text-xs">Clear History</span>

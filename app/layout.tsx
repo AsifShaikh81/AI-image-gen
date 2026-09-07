@@ -14,10 +14,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CodersBanana",
+  title: "Pixora - AI Image Editor",
   description: "AI Image Editor",
-  keywords: "codersbanana,codersgyan",
-  creator: "codersgyan",
+  keywords: "AI, Image Editor, Next.js, React, Zustand",
+  creator: "Asif",
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon-16x16.png",
