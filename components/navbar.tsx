@@ -9,7 +9,15 @@ import { cn } from "@/lib/utils";
 import { useGlobalstate } from "@/app/store/GlobalState";
 
 export function Navbar() {
-  const {undo , redo ,historyIndex, history,toggleShowHistory,showHistory} = useGlobalstate()
+  const {undo , redo ,historyIndex, history,toggleShowHistory,showHistory,image} = useGlobalstate()
+   
+  // * handle export image
+  const handleExport = ()=>{
+    const anchor = document.createElement("a")
+    anchor.href = image as string
+    anchor.download = `Pixora-${Date.now()}.png`
+    anchor.click()
+  }
   return (
     <header className="h-16 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between  px-4 shrink-0 z-50">
       {/* Left: Branding */}
@@ -77,6 +85,8 @@ export function Navbar() {
           </Button>
 
           <Button
+          onClick={handleExport}
+          disabled={!image}
             variant="default"
             size="sm"
             className="h-9 bg-[#8B5CF6] hover:bg-[#7C3AED] font-bold px-2.5 md:px-4"

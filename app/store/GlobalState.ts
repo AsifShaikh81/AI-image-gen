@@ -17,6 +17,7 @@
       redo:()=>void
       showHistory:boolean
       toggleShowHistory:()=>void
+      isLoading:boolean
   }
 
   export const useGlobalstate = create<imgTP>()(devtools((set,get) => ({
@@ -57,10 +58,15 @@
         set({showHistory:!state.showHistory})
       }
     },
+    isLoading:false,
     spaits:async () => {
       const state = get()
-    
-      console.log("Sending prompt and image to server...")
+     set(
+      {
+        isLoading:true
+      }
+     )
+      // console.log("Sending prompt and image to server...")
       // console.log("prompt",state.prompt)
       // console.log("image",state.image)
 
@@ -79,6 +85,11 @@
       
      )
      if(!response.ok){
+        set(
+          {
+            isLoading:false
+          }
+        )
       throw new Error("Failed to send prompt and image to server")
 
     }
@@ -89,7 +100,12 @@
     const cloneHistorty = [...state.history,data.result]
 
     if(data.result){
-      set(()=>({image:data.result, history:cloneHistorty, historyIndex:state.history.length}))
+      set(()=>(
+        {image:data.result, 
+          history:cloneHistorty, 
+          historyIndex:state.history.length,
+          isLoading:false
+        }))
     }
         
       } catch (error) {

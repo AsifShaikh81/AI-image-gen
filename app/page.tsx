@@ -15,7 +15,7 @@ export default function Home() {
    
   const fileimginputref = useRef<HTMLInputElement>(null);
   // const [image, setImage] = useState("")
-  const { image, setImage, showHistory } = useGlobalstate()
+  const { image, setImage, showHistory, isLoading } = useGlobalstate()
 
 
   //* getting the image from the input file
@@ -100,7 +100,8 @@ export default function Home() {
               </div>
 
               {/* render when image in generating */}
-              {/* <ImageGenerationLoading /> */}
+              {isLoading && <ImageGenerationLoading />}
+          
             </div>
 
             {/* PROMPT INPUT AREA */}
