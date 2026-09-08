@@ -12,10 +12,10 @@ import { useGlobalstate } from "./store/GlobalState";
 
 
 export default function Home() {
-
+   
   const fileimginputref = useRef<HTMLInputElement>(null);
   // const [image, setImage] = useState("")
-  const { image, setImage } = useGlobalstate()
+  const { image, setImage, showHistory } = useGlobalstate()
 
 
   //* getting the image from the input file
@@ -111,7 +111,8 @@ export default function Home() {
 
 
           {/* RIGHT COLUMNS EDIT HISTORY */}
-          <RightSidebar />
+          {showHistory && <RightSidebar />}
+                
         </div>
       </div>
     </>

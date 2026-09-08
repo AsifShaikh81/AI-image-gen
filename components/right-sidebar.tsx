@@ -43,9 +43,9 @@ const {history, historyIndex, setHistoryIndex} = useGlobalstate()
                     isActive
                       ? "border-[#7c3aed] shadow-[0_0_15px_rgba(234,179,8,0.2)]"
                       : "border-zinc-800 hover:border-zinc-600 opacity-60 hover:opacity-100",
-                  )}
-                >
-                  <Image
+                   )}
+                   >
+                   <Image
                     width={500}
                     height={500}
                     // ToDO: change logo 

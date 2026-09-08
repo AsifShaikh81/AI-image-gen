@@ -15,6 +15,8 @@
       setHistoryIndex:(index:number)=>void
       undo:()=>void
       redo:()=>void
+      showHistory:boolean
+      toggleShowHistory:()=>void
   }
 
   export const useGlobalstate = create<imgTP>()(devtools((set,get) => ({
@@ -46,6 +48,13 @@
       if(state.historyIndex < state.history.length - 1){
         const newIndex = state.historyIndex + 1 
         set({historyIndex:newIndex, image:state.history[newIndex]})
+      }
+    },
+    showHistory:false,
+    toggleShowHistory:()=> {
+      const state= get()
+      if(state.history.length){
+        set({showHistory:!state.showHistory})
       }
     },
     spaits:async () => {

@@ -3,13 +3,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Download, History, Redo, Undo, Upload, X } from "lucide-react";
+import { Download, History, Redo, Undo, Upload, X, XIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { useGlobalstate } from "@/app/store/GlobalState";
 
 export function Navbar() {
-  const {undo , redo ,historyIndex, history} = useGlobalstate()
+  const {undo , redo ,historyIndex, history,toggleShowHistory,showHistory} = useGlobalstate()
   return (
     <header className="h-16 bg-zinc-950 border-b border-zinc-800 flex items-center justify-between  px-4 shrink-0 z-50">
       {/* Left: Branding */}
@@ -97,8 +97,10 @@ export function Navbar() {
               "h-9 w-9 transition-all duration-200 bg-zinc-800 text-zinc-100 border border-zinc-700",
             )}
             title="Open History"
+            onClick={toggleShowHistory}
           >
-            <History size={18} />
+            {showHistory ? <XIcon size={18}/> :<History size={18} />}
+            
           </Button>
         </div>
       </div>
