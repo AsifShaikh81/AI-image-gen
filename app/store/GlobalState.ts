@@ -21,7 +21,8 @@ import { create } from 'zustand'
       isLoading:boolean
       //Idea Drop - remix image 
       // userFiles:FileUIPart[]
-      // setUserFiles:(files:FileUIPart[])=>void
+      // setUserFiles:(files:FileUIPart[])=>void(
+      applyFilters:(promt:string)=>void
   }
 
   export const useGlobalstate = create<imgTP>()(devtools((set,get) => ({
@@ -88,7 +89,7 @@ import { create } from 'zustand'
         body:JSON.stringify({
           prompt:state.prompt,
           imageBase64:state.image,
-          userFiles:state.userFiles,
+          // userFiles:state.userFiles,
         })
 
       }
@@ -123,6 +124,64 @@ import { create } from 'zustand'
       }
       
       
+
+    },
+    // For applying filters to the image
+    applyFilters:async (prompt:string)=>{
+      const state = get()
+      const finalPrompt = `${prompt} 
+      TECHNICAL CONSTRAINTS:
+        1. STRICTLY PRESERVE COMPOSITION: Do not change the subject's pose, the camera angle, or the placement of objects.
+        2. OUTPUT FORMAT: This is a style transfer. Keep the underlying structure of the image identical to the original, only changing the texture, lighting, and colors to match the requested style.
+      `
+     set(
+      {
+        isLoading:true
+      }
+     )
+     
+      try {
+        const response = await fetch('/api/editImage',{
+        method:'POST',
+        headers:{
+          'content-type':'application/json'
+        },
+        body:JSON.stringify({
+          prompt:finalPrompt,
+          imageBase64:state.image,
+          
+        })
+
+      }
+      
+     )
+     if(!response.ok){
+        set(
+          {
+            isLoading:false
+          }
+        )
+      throw new Error("Failed to send prompt and image to server")
+
+    }
+     
+    const data = await response.json()
+    console.log("Response from server:",data)
+    // here we get the result from the server and we need to update the state with the new image and history
+    const cloneHistorty = [...state.history,data.result]
+
+    if(data.result){
+      set(()=>(
+        {image:data.result, 
+          history:cloneHistorty, 
+          historyIndex:state.history.length,
+          isLoading:false
+        }))
+    }
+        
+      } catch (error) {
+        console.error("spaits error:", error)
+      }
 
     }
 

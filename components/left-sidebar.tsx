@@ -24,8 +24,10 @@ import {
 import GridItem from "@/components/grid-item";
 import { filters, ratios } from "@/lib/constants";
 import { ToolButton } from "@/components//tool-button";
+import { useGlobalstate } from "@/app/store/GlobalState";
 
 export const LeftSidebar = () => {
+  const {applyFilters, isLoading} = useGlobalstate()
   return (
     <aside className="hidden md:flex w-80 flex-col border-r border-zinc-800  bg-[#0F0F12] z-20 shrink-0 h-full">
       <ScrollArea className="h-full w-full">
@@ -152,9 +154,9 @@ export const LeftSidebar = () => {
                           label={item.name}
                           desc={item.prompt}
                           onClick={() => {
-                            
+                            applyFilters(item.prompt)
                           }}
-                          disabled={true}
+                          disabled={isLoading}
                         />
                       );
                     })}
