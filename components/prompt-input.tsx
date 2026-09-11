@@ -109,7 +109,7 @@ const PromptInputAttachmentsDisplay = () => {
 };
 
 export const AIPromptInput = () => {
-  const { setprompt ,spaits,isLoading} = useGlobalstate();
+  const { setprompt ,spaits,isLoading,userFiles,setUserFiles} = useGlobalstate();
   const [model, setModel] = useState<string>(models[0].id);
   const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
   const [status, setStatus] = useState<
@@ -128,9 +128,11 @@ export const AIPromptInput = () => {
     if (!(hasText || hasAttachments)) {
       return;
     }
-
+    //Idea Drop - remix image 
+    // console.log("userFiles", message.files);
     setStatus("submitted");
     setprompt(message.text || ""); // Update the prompt in global state
+    setUserFiles(message.files || []); // Update the user files in global state
     spaits(); // Call the function to send prompt and image to server
     // eslint-disable-next-line no-console
     console.log("Submitting message:", message);

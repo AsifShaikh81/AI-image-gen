@@ -1,15 +1,14 @@
 // /api/editImage/route.ts
 // route.ts
 import { NextRequest, NextResponse } from 'next/server'
-import fs from 'node:fs';
 import { InferenceClient } from "@huggingface/inference";
-// import sharp from 'sharp'
+
 
 
 
 export async function POST(req: NextRequest) {
   const client = new InferenceClient(process.env.HF_TOKEN);
-  const { prompt, imageBase64 } = await req.json()
+  const { prompt, imageBase64, userFiles } = await req.json()
 
     if (!prompt || !imageBase64) {
       return NextResponse.json(
@@ -30,12 +29,7 @@ export async function POST(req: NextRequest) {
    // image ko blob me isliye convert karna hoga kyunki huggingface inference client ko blob chahiye hota hai
     const buffer = Buffer.from(base64Data, 'base64')
 
-    // buffer banane ke baad, is se replace karo:
-// const processedBuffer = await sharp(buffer)
-//   .resize(1024, 1024, { fit: 'inside', withoutEnlargement: true })
-//   .flatten({ background: '#ffffff' }) // alpha channel remove
-//   .jpeg({ quality: 90 })
-//   .toBuffer()
+    
  
 try {
  const Blobimage = await client.imageToImage({
@@ -43,7 +37,19 @@ try {
 	model: "black-forest-labs/FLUX.1-Kontext-dev",
 	inputs: new Blob([buffer], { type: mymimeType }),
 	parameters: { prompt},
+
+  
 });
+//Idea Drop - remix image 
+// if(userFiles && userFiles.length > 0){
+//   const userFilesBlobs = userFiles.map((file: any) => {
+//     const fileBuffer = Buffer.from(file.url, 'base64');
+//     return new Blob([fileBuffer], { type: file.mimeType });
+//   });
+//   console.log("✅ userFilesBlobs:", userFilesBlobs);
+//   
+// }
+console.log("✅ imageToImage successful:", Blobimage)
 /// Use the generated image (it's a Blob)
 // For example, you can save it to a file or display it in an image element
 

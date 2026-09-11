@@ -1,5 +1,6 @@
 
-  import { create } from 'zustand'
+  import { FileUIPart } from 'ai'
+import { create } from 'zustand'
   import { devtools } from 'zustand/middleware'
 
   type imgTP ={
@@ -18,6 +19,9 @@
       showHistory:boolean
       toggleShowHistory:()=>void
       isLoading:boolean
+      //Idea Drop - remix image 
+      // userFiles:FileUIPart[]
+      // setUserFiles:(files:FileUIPart[])=>void
   }
 
   export const useGlobalstate = create<imgTP>()(devtools((set,get) => ({
@@ -59,6 +63,11 @@
       }
     },
     isLoading:false,
+    //Idea Drop - remix image 
+    // userFiles:[],
+    // setUserFiles:(files:FileUIPart[])=>{
+    //   set({userFiles:files})
+    // },
     spaits:async () => {
       const state = get()
      set(
@@ -78,7 +87,8 @@
         },
         body:JSON.stringify({
           prompt:state.prompt,
-          imageBase64:state.image
+          imageBase64:state.image,
+          userFiles:state.userFiles,
         })
 
       }
