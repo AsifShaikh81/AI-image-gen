@@ -2,7 +2,7 @@
 // route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { InferenceClient } from "@huggingface/inference";
-
+import { fal } from "@fal-ai/client";
 
 
 
@@ -53,6 +53,23 @@ console.log("✅ imageToImage successful:", Blobimage)
 /// Use the generated image (it's a Blob)
 // For example, you can save it to a file or display it in an image element
 
+
+// Background Remover model
+
+
+const result = await fal.subscribe("fal-ai/bria/background/remove", {
+  input: {
+    image_url: base64Data
+  },
+  logs: true,
+  onQueueUpdate: (update) => {
+    if (update.status === "IN_PROGRESS") {
+      update.logs.map((log) => log.message).forEach(console.log);
+    }
+  },
+});
+// console.log(result.data);
+// console.log(result.requestId);
 
 
 // Blob ko base64 mein convert karo taaki JSON response mein bhej sakein

@@ -23,7 +23,8 @@ import { create } from 'zustand'
       // userFiles:FileUIPart[]
       // setUserFiles:(files:FileUIPart[])=>void(
       applyFilters:(promt:string)=>void
-  }
+      backgroundRemover:(imageBase64:string)=>void
+  }  
 
   export const useGlobalstate = create<imgTP>()(devtools((set,get) => ({
     image:null,
@@ -183,6 +184,65 @@ import { create } from 'zustand'
         console.error("spaits error:", error)
       }
 
+    },
+   backgroundRemover:async(imageR:string)=>{
+    const state = get()
+    const finalPrompt = `Remove the background from the image, keeping only the main subject. The output should be a transparent PNG with the subject isolated.`
+    set(
+      {
+        isLoading:true
+      }
+     )
+    
+     if(!imageR){
+      console.error("No image found")
+      return
+     }
+     try {
+        const response = await fetch('/api/removeBackground',{
+        method:'POST',
+        headers:{
+          'content-type':'application/json'
+        },
+        body:JSON.stringify({
+          prompt:state.prompt,
+          imageBase64:imageR,
+          finalPrompt:finalPrompt
+          
+        })
+
+      }
+      
+     )
+     if(!response.ok){
+        set(
+          {
+            isLoading:false
+          }
+        )
+      throw new Error("Failed to send prompt and image to server")
+
     }
+     
+    const data = await response.json()
+    console.log("Response from server:",data)
+    
+    const cloneHistorty = [...state.history,data.result]
+
+    if(data.result){
+      set(()=>(
+        {image:data.result, 
+          history:cloneHistorty, 
+          historyIndex:state.history.length,
+          isLoading:false
+        }))
+    }
+        
+      } catch (error) {
+        console.error("spaits error:", error)
+      }
+     
+     
+   }    
 
   })))

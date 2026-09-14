@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@fal-ai/client": "^1.10.1",
     "@google/genai": "^2.18.0",
     "@huggingface/inference": "^4.13.28",
     "@radix-ui/react-accordion": "^1.2.12",

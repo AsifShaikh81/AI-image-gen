@@ -25,9 +25,11 @@ import GridItem from "@/components/grid-item";
 import { filters, ratios } from "@/lib/constants";
 import { ToolButton } from "@/components//tool-button";
 import { useGlobalstate } from "@/app/store/GlobalState";
+import image from "next/image";
 
 export const LeftSidebar = () => {
-  const {applyFilters, isLoading} = useGlobalstate()
+  const {applyFilters, isLoading,backgroundRemover,image} = useGlobalstate()
+  
   return (
     <aside className="hidden md:flex w-80 flex-col border-r border-zinc-800  bg-[#0F0F12] z-20 shrink-0 h-full">
       <ScrollArea className="h-full w-full">
@@ -121,16 +123,17 @@ export const LeftSidebar = () => {
                       label={"Remove Background"}
                       // desc={"clear background"}
                       onClick={()=>{
-
+                         backgroundRemover(image)
                       }}
-                      disabled={true}
+                      
+                      disabled={false}
                     />
                     <GridItem
                       icon={Sparkles}
                       label={"AI Refreshment"}
                       desc={""}
                       onClick={() => {}}
-                      disabled={true}
+                      disabled={false}
                     />
                   </div>
                 </AccordionContent>
