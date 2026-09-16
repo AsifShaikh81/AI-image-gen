@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
   const base64Data = imageBase64.includes(',') ? imageBase64.split(',')[1] : imageBase64;
 
    // base64 -> Buffer -> Blob (actual uploaded image use ho rahi hai, hardcoded file nahi)
+  // Remember : image already frontend se base64 mein aa raha hai 
    //image ko blob me convert karne ke liye pehle base64 ko buffer me convert karna hoga 
    // image ko blob me isliye convert karna hoga kyunki huggingface inference client ko blob chahiye hota hai
     const buffer = Buffer.from(base64Data, 'base64')

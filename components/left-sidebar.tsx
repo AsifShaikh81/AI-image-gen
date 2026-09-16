@@ -25,10 +25,10 @@ import GridItem from "@/components/grid-item";
 import { filters, ratios } from "@/lib/constants";
 import { ToolButton } from "@/components//tool-button";
 import { useGlobalstate } from "@/app/store/GlobalState";
-import image from "next/image";
+
 
 export const LeftSidebar = () => {
-  const {applyFilters, isLoading,backgroundRemover,image} = useGlobalstate()
+  const {applyFilters, isLoading,backgroundRemover,image, imageExpander} = useGlobalstate()
   
   return (
     <aside className="hidden md:flex w-80 flex-col border-r border-zinc-800  bg-[#0F0F12] z-20 shrink-0 h-full">
@@ -123,17 +123,19 @@ export const LeftSidebar = () => {
                       label={"Remove Background"}
                       // desc={"clear background"}
                       onClick={()=>{
-                         backgroundRemover(image)
+                         if (image) {
+                          backgroundRemover(image)
+                         }
                       }}
                       
-                      disabled={false}
+                       disabled={!image || isLoading}
                     />
                     <GridItem
                       icon={Sparkles}
                       label={"AI Refreshment"}
                       desc={""}
                       onClick={() => {}}
-                      disabled={false}
+                      disabled={!image || isLoading}
                     />
                   </div>
                 </AccordionContent>
@@ -159,7 +161,7 @@ export const LeftSidebar = () => {
                           onClick={() => {
                             applyFilters(item.prompt)
                           }}
-                          disabled={isLoading}
+                          disabled={!image || isLoading}
                         />
                       );
                     })}
@@ -184,9 +186,13 @@ export const LeftSidebar = () => {
                         label={r.label}
                         desc={r.desc}
                         onClick={() => {
-
+                          if(!image){
+                            console.error("no image available")
+                            return 
+                          }
+                          imageExpander(r.size, image)
                         }}
-                        disabled={true}
+                        disabled={!image || isLoading}
                       />
                     ))}
                   </div>

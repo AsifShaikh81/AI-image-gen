@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "clean": "rmdir /s /q .next"
+
+
   },
   "dependencies": {
     "@fal-ai/client": "^1.10.1",

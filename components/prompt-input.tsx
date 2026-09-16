@@ -132,7 +132,7 @@ export const AIPromptInput = () => {
     // console.log("userFiles", message.files);
     setStatus("submitted");
     setprompt(message.text || ""); // Update the prompt in global state
-    setUserFiles(message.files || []); // Update the user files in global state
+    // setUserFiles(message.files || []); // Update the user files in global state
     spaits(); // Call the function to send prompt and image to server
     // eslint-disable-next-line no-console
     console.log("Submitting message:", message);

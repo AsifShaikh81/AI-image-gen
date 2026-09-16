@@ -1,4 +1,5 @@
 
+  // store
   import { FileUIPart } from 'ai'
 import { create } from 'zustand'
   import { devtools } from 'zustand/middleware'
@@ -22,8 +23,9 @@ import { create } from 'zustand'
       //Idea Drop - remix image 
       // userFiles:FileUIPart[]
       // setUserFiles:(files:FileUIPart[])=>void(
-      applyFilters:(promt:string)=>void
-      backgroundRemover:(imageBase64:string)=>void
+      applyFilters:(promt:string)=>Promise<void>
+      backgroundRemover:(imageBase64:string)=>Promise<void> // not functioning yet
+      imageExpander:(size:string, imageBase64:string)=>Promise<void>
   }  
 
   export const useGlobalstate = create<imgTP>()(devtools((set,get) => ({
@@ -82,7 +84,7 @@ import { create } from 'zustand'
       // console.log("image",state.image)
 
       try {
-        const response = await fetch('/api/editImage',{
+        const response = await fetch('/api/geminieditImage',{
         method:'POST',
         headers:{
           'content-type':'application/json'
@@ -142,7 +144,7 @@ import { create } from 'zustand'
      )
      
       try {
-        const response = await fetch('/api/editImage',{
+        const response = await fetch('/api/geminieditImage',{
         method:'POST',
         headers:{
           'content-type':'application/json'
@@ -243,6 +245,69 @@ import { create } from 'zustand'
       }
      
      
-   }    
+   },
+   imageExpander:async(size:string, imageBase64:string)=>{
+    const state = get()
+    // const finalPrompt = `Remove the background from the image, keeping only the main subject. The output should be a transparent PNG with the subject isolated.`
+    set(
+      {
+        isLoading:true
+      }
+     )
+    
+     if(!size){
+      console.error("No size found")
+      return
+     }
+     if(!imageBase64){
+      console.error("No imageBase64 found")
+      return
+     }
+     try {
+        const response = await fetch('/api/expandImage',{
+        method:'POST',
+        headers:{
+          'content-type':'application/json'
+        },
+        body:JSON.stringify({
+          prompt:state.prompt, // user prompt
+          imageBase64,
+          size
+          
+        })
+
+      }
+      
+     )
+     if(!response.ok){
+        set(
+          {
+            isLoading:false
+          }
+        )
+      throw new Error("Failed to send prompt and image to server")
+
+    }
+     
+    const data = await response.json()
+    console.log("Response from server:",data)
+    
+    const cloneHistorty = [...state.history,data.result]
+
+    if(data.result){
+      set(()=>(
+        {image:data.result, 
+          history:cloneHistorty, 
+          historyIndex:state.history.length,
+          isLoading:false
+        }))
+    }
+        
+      } catch (error) {
+        console.error("spaits error:", error)
+      }
+     
+
+   }
 
   })))
