@@ -20,12 +20,11 @@ import { create } from 'zustand'
       showHistory:boolean
       toggleShowHistory:()=>void
       isLoading:boolean
-      //Idea Drop - remix image 
-      // userFiles:FileUIPart[]
-      // setUserFiles:(files:FileUIPart[])=>void(
+      userFiles:FileUIPart[]
+      setUserFiles:(files:FileUIPart[])=>void
       applyFilters:(promt:string)=>Promise<void>
       backgroundRemover:(imageBase64:string)=>Promise<void> // not functioning yet
-      imageExpander:(size:string, imageBase64:string)=>Promise<void>
+      imageExpander:(aspectRatio:string, imageBase64:string)=>Promise<void>
   }  
 
   export const useGlobalstate = create<imgTP>()(devtools((set,get) => ({
@@ -67,11 +66,10 @@ import { create } from 'zustand'
       }
     },
     isLoading:false,
-    //Idea Drop - remix image 
-    // userFiles:[],
-    // setUserFiles:(files:FileUIPart[])=>{
-    //   set({userFiles:files})
-    // },
+    userFiles:[],
+    setUserFiles:(files:FileUIPart[])=>{
+      set({userFiles:files})
+    },
     spaits:async () => {
       const state = get()
      set(
@@ -92,7 +90,7 @@ import { create } from 'zustand'
         body:JSON.stringify({
           prompt:state.prompt,
           imageBase64:state.image,
-          // userFiles:state.userFiles,
+          userFiles:state.userFiles,
         })
 
       }
@@ -246,17 +244,28 @@ import { create } from 'zustand'
      
      
    },
-   imageExpander:async(size:string, imageBase64:string)=>{
+   imageExpander:async(aspectRatio:string, imageBase64:string)=>{
     const state = get()
-    // const finalPrompt = `Remove the background from the image, keeping only the main subject. The output should be a transparent PNG with the subject isolated.`
+    const baseInstruction = `High-fidelity outpainting. Analyze the visual context of the original image and seamlessly extend the scenery into the empty areas. Ensure the person's face and features remain completely unchanged`;
+
+      const technicalConstraint = `Strictly maintain the continuity of existing lines, horizon, textures, lighting, and perspective. The transition must be invisible. Do not alter the style or content of the original center image `;
+
+      const userContext = state.prompt
+        ? `Addtional context/subject for extension: ${state.prompt}`
+        : "";
+
+      const finalPrompt = `
+        ${baseInstruction}
+        ${technicalConstraint}
+        ${userContext}`;
     set(
       {
         isLoading:true
       }
      )
     
-     if(!size){
-      console.error("No size found")
+     if(!aspectRatio){
+      console.error("No aspect ratio found")
       return
      }
      if(!imageBase64){
@@ -264,15 +273,15 @@ import { create } from 'zustand'
       return
      }
      try {
-        const response = await fetch('/api/expandImage',{
+        const response = await fetch('/api/geminieditImage',{
         method:'POST',
         headers:{
           'content-type':'application/json'
         },
         body:JSON.stringify({
-          prompt:state.prompt, // user prompt
+          prompt:finalPrompt,
           imageBase64,
-          size
+          aspectRatio
           
         })
 

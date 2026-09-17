@@ -15,7 +15,7 @@ export const ratios = [
     label: "Square (1:1)",
     value: 1,
     aspectRatio: "1:1",
-    size: "1024x1024",
+    // size: "1024x1024",
     icon: Square,
     desc: "Instagram Feed",
   },
@@ -25,31 +25,31 @@ export const ratios = [
     label: "Wide (16:9)",
     value: 16 / 9,
     aspectRatio: "16:9",
-    size: "1792x1024",
+    // size: "1792x1024",
     icon: Monitor,
     desc: "YouTube / Video",
   },
-  // {
-  //   label: "Standard (4:3)",
-  //   value: 4 / 3,
-  //   aspectRatio: "4:3",
-  //   icon: RectangleHorizontal,
-  //   desc: "Classic Camera",
-  // },
-  // {
-  //   label: "Classic (3:2)",
-  //   value: 3 / 2,
-  //   aspectRatio: "3:2",
-  //   icon: Frame,
-  //   desc: "DSLR / Print",
-  // },
-  // {
-  //   label: "Cinema (21:9)",
-  //   value: 21 / 9,
-  //   aspectRatio: "21:9",
-  //   icon: Film,
-  //   desc: "Ultrawide",
-  // },
+  {
+    label: "Standard (4:3)",
+    value: 4 / 3,
+    aspectRatio: "4:3",
+    icon: RectangleHorizontal,
+    desc: "Classic Camera",
+  },
+  {
+    label: "Classic (3:2)",
+    value: 3 / 2,
+    aspectRatio: "3:2",
+    icon: Frame,
+    desc: "DSLR / Print",
+  },
+  {
+    label: "Cinema (21:9)",
+    value: 21 / 9,
+    aspectRatio: "21:9",
+    icon: Film,
+    desc: "Ultrawide",
+  },
 
   // Portrait / Tall
   {
@@ -60,20 +60,20 @@ export const ratios = [
     icon: Smartphone,
     desc: "TikTok / Reels",
   },
-  // {
-  //   label: "Social (4:5)",
-  //   value: 4 / 5,
-  //   aspectRatio: "4:5",
-  //   icon: Crop,
-  //   desc: "Insta Portrait",
-  // },
-  // {
-  //   label: "Poster (2:3)",
-  //   value: 2 / 3,
-  //   aspectRatio: "2:3",
-  //   icon: RectangleVertical,
-  //   desc: "Pinterest",
-  // },
+  {
+    label: "Social (4:5)",
+    value: 4 / 5,
+    aspectRatio: "4:5",
+    icon: Crop,
+    desc: "Insta Portrait",
+  },
+  {
+    label: "Poster (2:3)",
+    value: 2 / 3,
+    aspectRatio: "2:3",
+    icon: RectangleVertical,
+    desc: "Pinterest",
+  },
 ];
 
 export const filters = [

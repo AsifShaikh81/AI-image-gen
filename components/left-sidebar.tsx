@@ -190,7 +190,7 @@ export const LeftSidebar = () => {
                             console.error("no image available")
                             return 
                           }
-                          imageExpander(r.size, image)
+                          imageExpander(r.aspectRatio,image)
                         }}
                         disabled={!image || isLoading}
                       />
