@@ -87,7 +87,7 @@ export const LeftSidebar = () => {
                 step={1}
                 onValueChange={()=>{
                 }}
-                className="py-2 [&>.relative>.absolute]:bg-yellow-500 **:[[role=slider]]:border-yellow-500 **:[[role=slider]]:bg-zinc-950 **:[[role=slider]]:ring-offset-zinc-950 **:[[role=slider]]:focus-visible:ring-yellow-500"
+                className="py-2 [&>.relative>.absolute]:bg-[#7c3aed] **:[[role=slider]]:border-[#7c3aed] **:[[role=slider]]:bg-zinc-950 **:[[role=slider]]:ring-offset-zinc-950 **:[[role=slider]]:focus-visible:ring-yellow-500"
               />
             </div>
           </div>
@@ -110,7 +110,7 @@ export const LeftSidebar = () => {
             >
               {/* Item 1: Editing Options */}
               <AccordionItem value="options" className="border-zinc-800">
-                <AccordionTrigger className="text-zinc-200 hover:text-yellow-500 hover:no-underline py-3 transition-colors">
+                <AccordionTrigger className="text-zinc-200 hover:text-[#7c3aed] hover:no-underline py-3 transition-colors">
                   <div className="flex items-center gap-2">
                     <Sparkles size={16} />
                     <span className="text-sm">AI Editing Options</span>
@@ -143,7 +143,7 @@ export const LeftSidebar = () => {
 
               {/* Item 2: AI Filters */}
               <AccordionItem value="filters" className="border-zinc-800">
-                <AccordionTrigger className="text-zinc-200 hover:text-yellow-500 hover:no-underline py-3 transition-colors">
+                <AccordionTrigger className="text-zinc-200 hover:text-[#7c3aed] hover:no-underline py-3 transition-colors">
                   <div className="flex items-center gap-2">
                     <ImageIcon size={16} />
                     <span className="text-sm">AI Filters</span>
@@ -171,7 +171,7 @@ export const LeftSidebar = () => {
 
               {/* Item 3: AI Expansion */}
               <AccordionItem value="expansion" className="border-none">
-                <AccordionTrigger className="text-zinc-200 hover:text-yellow-500 hover:no-underline py-3 transition-colors">
+                <AccordionTrigger className="text-zinc-200 hover:text-[#7c3aed] hover:no-underline py-3 transition-colors">
                   <div className="flex items-center gap-2">
                     <Maximize size={16} />
                     <span className="text-sm">AI Expansion</span>
