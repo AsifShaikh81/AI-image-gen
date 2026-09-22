@@ -9,6 +9,7 @@ import { AIPromptInput } from "@/components/prompt-input";
 import { RightSidebar } from "@/components/right-sidebar";
 import { useRef, useState } from "react";
 import { useGlobalstate } from "./store/GlobalState";
+import { ImageEditor } from "@/components/imageEditor";
 
 
 export default function Home() {
@@ -89,12 +90,7 @@ export default function Home() {
                   </div>
                 ) : (
                   <div className="relative w-full h-full flex items-center justify-center">
-                    <Image
-                      src={image}
-                      alt="Uploaded Image"
-                      fill
-                      className="object-contain"
-                    />
+                    <ImageEditor/>
                   </div>
                 )}
               </div>
