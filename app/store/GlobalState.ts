@@ -1,6 +1,7 @@
 
   // store
-  import { FileUIPart } from 'ai'
+  import { ToolType } from '@/lib/constants'
+import { FileUIPart } from 'ai'
 import { create } from 'zustand'
   import { devtools } from 'zustand/middleware'
 
@@ -23,8 +24,13 @@ import { create } from 'zustand'
       userFiles:FileUIPart[]
       setUserFiles:(files:FileUIPart[])=>void
       applyFilters:(promt:string)=>Promise<void>
-      backgroundRemover:(imageBase64:string)=>Promise<void> // not functioning yet
-      imageExpander:(aspectRatio:string, imageBase64:string)=>Promise<void>
+      backgroundRemover:(imageBase64:string)=>Promise<void> // not  using
+      imageExpander:(aspectRatio:string, imageBase64:string)=>Promise<void> // not using
+      selectedTool:ToolType
+      setSelectedTool:(tool:ToolType)=>void
+      brushSize: number
+      setBrushSize:(size:number)=> void
+
   }  
 
   export const useGlobalstate = create<imgTP>()(devtools((set,get) => ({
@@ -70,6 +76,15 @@ import { create } from 'zustand'
     setUserFiles:(files:FileUIPart[])=>{
       set({userFiles:files})
     },
+    selectedTool:ToolType.pan,
+    setSelectedTool: (tool:ToolType) =>{
+      set({selectedTool:tool})
+    },
+     brushSize: 10,
+      setBrushSize:(size:number)=>{
+        set({brushSize:size})
+      },
+   
     spaits:async () => {
       const state = get()
      set(

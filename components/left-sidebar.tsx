@@ -22,13 +22,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import GridItem from "@/components/grid-item";
-import { filters, ratios } from "@/lib/constants";
+import { filters, ratios, ToolType } from "@/lib/constants";
 import { ToolButton } from "@/components//tool-button";
 import { useGlobalstate } from "@/app/store/GlobalState";
 
 
 export const LeftSidebar = () => {
-  const {applyFilters, isLoading,backgroundRemover,image, imageExpander} = useGlobalstate()
+  const {applyFilters, isLoading,backgroundRemover,image, imageExpander,selectedTool,setSelectedTool,brushSize,setBrushSize} = useGlobalstate()
   
   return (
     <aside className="hidden md:flex w-80 flex-col border-r border-zinc-800  bg-[#0F0F12] z-20 shrink-0 h-full">
@@ -43,26 +43,26 @@ export const LeftSidebar = () => {
 
             <div className="grid grid-cols-4 gap-2">
               <ToolButton
-                active={true}
-                onClick={()=>{}}
+                active={selectedTool === ToolType.pan}
+                onClick={()=>{setSelectedTool(ToolType.pan)}}
                 icon={<Hand size={18} />}
-                label="Pan"
+                label="Pan" 
               />
               <ToolButton
-                active={false}
-                onClick={() => {}}
+                active={selectedTool === ToolType.square}
+                onClick={() => {setSelectedTool(ToolType.square)}}
                 icon={<Square size={18} />}
                 label="Select"
               />
               <ToolButton
-                active={false}
-                onClick={()=>{}}
+                active={selectedTool=== ToolType.brush}
+                onClick={()=>{setSelectedTool(ToolType.brush)}}
                 icon={<Brush size={18} />}
                 label="Brush"
               />
               <ToolButton
-                active={false}
-                onClick={()=>{}}
+                active={selectedTool === ToolType.eraser}
+                onClick={()=>{setSelectedTool(ToolType.eraser)}}
                 icon={<Eraser size={18} />}
                 label="Erase"
               />
@@ -75,17 +75,18 @@ export const LeftSidebar = () => {
                   Size
                 </h3>
                 <span className="text-xs font-mono text-[#A1A1AA] bg-zinc-900 border border-zinc-800 px-2 py-1 rounded">
-                  10px
+                  {brushSize}
                 </span>
               </div>
 
               {/* Custom styled slider to force yellow theme regardless of global primary color */}
               <Slider
-                defaultValue={[10]}
+                defaultValue={[brushSize]}
                 max={100}
                 min={5}
                 step={1}
-                onValueChange={()=>{
+                onValueChange={(value)=>{
+                  setBrushSize(value[0])
                 }}
                 className="py-2 [&>.relative>.absolute]:bg-[#7c3aed] **:[[role=slider]]:border-[#7c3aed] **:[[role=slider]]:bg-zinc-950 **:[[role=slider]]:ring-offset-zinc-950 **:[[role=slider]]:focus-visible:ring-yellow-500"
               />

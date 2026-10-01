@@ -106,3 +106,12 @@ export const filters = [
     image: "/filters/oilpainting.png",
   },
 ];
+
+export  enum ToolType {
+ pan = "PAN",
+ square = "SQUARE",
+ brush = "BRUSH",
+ eraser = "ERASER"
+}
+
+
