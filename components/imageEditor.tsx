@@ -84,7 +84,7 @@ export const ImageEditor = () => {
             ctx.lineCap = 'round'
             ctx.lineJoin = "round"
 
-            // 👇 pehle color set karo
+            // pehle color set karo
             if (selectedTool === ToolType.brush) {
                 ctx.strokeStyle = 'white'
                 ctx.fillStyle = 'white'
@@ -94,7 +94,7 @@ export const ImageEditor = () => {
             }
             console.log("strokeStyle after check:", ctx.strokeStyle, "| selectedTool was:", selectedTool)
 
-            // 👇 phir draw karo
+            // phir draw karo
             ctx.beginPath()
             ctx.moveTo(start.x, start.y)
             ctx.lineTo(end.x, end.y)
