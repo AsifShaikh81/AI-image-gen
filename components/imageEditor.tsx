@@ -12,6 +12,8 @@ export const ImageEditor = () => {
     const maskCanvasRef = useRef<HTMLCanvasElement>(null)
     const ImageRef = useRef<HTMLImageElement>(null)
     const isDrawRef = useRef<boolean>(false)
+    const overlayCanvasRef = useRef<HTMLCanvasElement>(null)
+
     const draw = useCallback(() => {
         if (!canvasRef.current) return
         const ctx = canvasRef.current.getContext("2d");
@@ -20,7 +22,32 @@ export const ImageEditor = () => {
         ctx?.clearRect(0, 0, canvasRef.current!.width, canvasRef.current!.height)
         // draw the image
         ctx?.drawImage(ImageRef.current, 0, 0)
-
+        
+        // copy mask to overlay
+        ctx.save()
+        if(!overlayCanvasRef.current || !maskCanvasRef.current) return
+        const overlayCtx = overlayCanvasRef.current.getContext("2d") 
+        overlayCtx?.clearRect(0,0,overlayCanvasRef.current?.width,overlayCanvasRef.current?.height)
+        overlayCtx?.drawImage(maskCanvasRef.current,0,0)
+       // change white to red on overlay
+       const imageData =  overlayCtx?.getImageData(0,0,overlayCanvasRef.current.width,overlayCanvasRef.current.height)
+       const data = imageData?.data
+       const WHITE_THRESHOLD = 10
+       for(let i = 0 ; i<data?.length; i+=4){
+        // if white 
+        if(data[i]>WHITE_THRESHOLD){
+            data[i] = 255 //red
+            data[i+1] = 0 // green
+            data[i+2] = 0 // blue
+            data[i+3] = 100 // alpha - controls opacity
+        }else{
+            // if black
+            data[i+3] = 0 // full transparent
+        }
+       }
+       overlayCtx?.putImageData(imageData,0,0)
+       ctx.drawImage(overlayCanvasRef.current,0,0)
+       ctx.restore()
 
     }, [image])
 
@@ -50,6 +77,12 @@ export const ImageEditor = () => {
                 maskedctx.fillStyle = 'black'
                 maskedctx.fillRect(0, 0, maskCanvasRef.current.width, maskCanvasRef.current.height)
             }
+
+            // create a temp(overlay) mask
+            overlayCanvasRef.current = document.createElement('canvas')
+            overlayCanvasRef.current.width = img.width
+            overlayCanvasRef.current.height = img.height 
+
             draw()
         }
 
@@ -118,7 +151,7 @@ export const ImageEditor = () => {
         updateMask(startposi,currentposi)
         startPosRef.current = currentposi
      }
-
+      draw()
     }
     // when mouse no longe active on screen , mtlb mouse click kar k choodh diya 
     const stopDraw = ()=>{
