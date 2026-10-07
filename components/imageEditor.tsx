@@ -66,8 +66,8 @@ export const ImageEditor = () => {
 
             //prepare mask - this mask will not be shown to user 
 
-            // maskCanvasRef.current = document.createElement('canvas')
-            // if(!maskCanvasRef) return
+            maskCanvasRef.current = document.createElement('canvas')
+            if(!maskCanvasRef) return
             maskCanvasRef.current.width = img.width
             maskCanvasRef.current.height = img.height
             console.log("📏 Image natural size:", img.naturalWidth, "x", img.naturalHeight)
@@ -168,7 +168,7 @@ export const ImageEditor = () => {
                 onPointerDown={startDrawing}
                 onPointerMove={drawMove}
                 onPointerUp={stopDraw}
-                className="max-w-full max-h-full">
+                className="max-w-full max-h-full">  
             </canvas>
             {/*    <NextImage
                 src={image}
@@ -176,9 +176,9 @@ export const ImageEditor = () => {
                 fill
                 className="object-contain"
             /> */}
-            <canvas ref={maskCanvasRef} className="max-w-full max-h-full">
+            {/* <canvas ref={maskCanvasRef} className="max-w-full max-h-full">
 
-            </canvas>
+            </canvas> */}
         </>
     )
 }
