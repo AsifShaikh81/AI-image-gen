@@ -4,7 +4,7 @@ import { fal } from "@fal-ai/client";
 
 export async function POST(req: NextRequest) {
   try {
-    const { prompt, imageBase64, userFiles, aspectRatio } = await req.json()
+    const { prompt, imageBase64, userFiles, aspectRatio,maskBase64} = await req.json()
     console.log("1 Request received")
     console.log("Prompt:", prompt)
     console.log("Image exists:", !!imageBase64)
@@ -54,13 +54,15 @@ export async function POST(req: NextRequest) {
     // gemini  model - nano banana 2 
     const result = await fal.subscribe("fal-ai/nano-banana-2/edit", {
       input: {
-        prompt: prompt,
-        image_urls:imageUrls,
+        prompt:`${prompt}. The second reference image shows a mask where WHITE/highlighted areas indicate exactly where to apply this edit — everything outside that marked area must remain completely unchanged`, 
+        image_urls:[...imageUrls,maskBase64],
         resolution: '0.5K',
         aspect_ratio: aspectRatio,
         
+        
 
-      }
+      },
+      
 
     })
 

@@ -131,7 +131,7 @@ import { create } from 'zustand'
           prompt:finalPrompt,
           imageBase64:state.image,
           userFiles:state.userFiles,
-          Mask:state.Mask 
+          maskBase64:state.Mask 
         })
 
       }
