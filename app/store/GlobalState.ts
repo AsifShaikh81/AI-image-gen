@@ -30,7 +30,8 @@ import { create } from 'zustand'
       setSelectedTool:(tool:ToolType)=>void
       brushSize: number
       setBrushSize:(size:number)=> void
-
+      Mask:string | null
+      setMask: (url:string)=>void
   }  
 
   export const useGlobalstate = create<imgTP>()(devtools((set,get) => ({
@@ -83,6 +84,10 @@ import { create } from 'zustand'
      brushSize: 10,
       setBrushSize:(size:number)=>{
         set({brushSize:size})
+      },
+      Mask:null,
+      setMask:(url)=>{
+        set({Mask:url})
       },
    
     spaits:async () => {

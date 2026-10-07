@@ -6,7 +6,7 @@ import { createElement, useCallback, useEffect, useRef } from 'react'
 
 
 export const ImageEditor = () => {
-    const { image, selectedTool,brushSize } = useGlobalstate()
+    const { image, selectedTool,brushSize,Mask,setMask } = useGlobalstate()
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const startPosRef = useRef<point>(null)
     const maskCanvasRef = useRef<HTMLCanvasElement>(null)
@@ -156,6 +156,11 @@ export const ImageEditor = () => {
     // when mouse no longe active on screen , mtlb mouse click kar k choodh diya 
     const stopDraw = ()=>{
         isDrawRef.current =  false
+        if(maskCanvasRef.current){
+        const dataUrl  =  maskCanvasRef.current?.toDataURL()
+        console.log(dataUrl)
+        setMask(dataUrl)
+        }
     }
     return (
         <>
