@@ -32,6 +32,7 @@ export const ImageEditor = () => {
        // change white to red on overlay
        const imageData =  overlayCtx?.getImageData(0,0,overlayCanvasRef.current.width,overlayCanvasRef.current.height)
        const data = imageData?.data
+       if(!data) return
        const WHITE_THRESHOLD = 10
        for(let i = 0 ; i<data?.length; i+=4){
         // if white 
@@ -150,12 +151,40 @@ export const ImageEditor = () => {
         if(selectedTool === ToolType.brush || selectedTool ===  ToolType.eraser){
         updateMask(startposi,currentposi)
         startPosRef.current = currentposi
+        draw()
+     }else if(selectedTool === ToolType.square){
+        draw() // calling draw to clear 
+        const ctx = canvasRef.current?.getContext("2d")
+        if(ctx){
+            ctx.save()
+        const w = currentposi.x - startposi.x
+        const h = currentposi.y - startposi.y
+        ctx.fillStyle = "rgba(255,0,0,0.4)"
+        ctx.fillRect(startposi.x,startposi.y,w,h)
+      ctx.restore() 
+    }
+
      }
-      draw()
     }
     // when mouse no longe active on screen , mtlb mouse click kar k choodh diya 
-    const stopDraw = ()=>{
+    const stopDraw = (e:React.PointerEvent)=>{
         isDrawRef.current =  false
+        if(selectedTool === ToolType.square){
+        const endpos = getPointerPos(e)
+        const startposi = startPosRef.current
+        if(!startposi) return
+        const ctx = maskCanvasRef.current?.getContext("2d")
+        if(ctx){
+        ctx.fillStyle = "white"
+        const w = endpos.x - startposi.x;
+        const h = endpos.y - startposi.y;
+        if(Math.abs(w)>0 && Math.abs(h) > 0){
+            ctx.fillRect(startposi.x, startposi.y, w, h);
+        }
+    }   
+    }
+
+
         if(maskCanvasRef.current){
         const dataUrl  =  maskCanvasRef.current?.toDataURL()
         console.log(dataUrl)
@@ -176,9 +205,7 @@ export const ImageEditor = () => {
                 fill
                 className="object-contain"
             /> */}
-            {/* <canvas ref={maskCanvasRef} className="max-w-full max-h-full">
-
-            </canvas> */}
+              {/* <canvas ref={maskCanvasRef} className="max-w-full max-h-full"></canvas>  */}
         </>
     )
 }
